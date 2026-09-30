@@ -139,6 +139,7 @@ body::after {
   flex-direction: column;
   gap: var(--space-4);
   position: relative;
+  isolation: isolate;
 }
 
 /* ══════════════════════════════════════
@@ -331,7 +332,6 @@ body::after {
   letter-spacing: 0.03em;
 }
 
-.form-group input,
 .form-group input,
 .form-group select {
   width: 100%;

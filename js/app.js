@@ -267,7 +267,7 @@ function renderList() {
     item.dataset.index = originalIndex;
 
     item.innerHTML = `
-      <span class="category-badge badge-${t.category}"><i class="badge-icon">${CATEGORY_ICONS[t.category]}</i>${t.category}</span>
+      <span class="category-badge badge-${t.category}"><span class="badge-icon">${CATEGORY_ICONS[t.category] || ""}</span>${t.category}</span>
       <span class="transaction-name">${escapeHtml(t.name)}</span>
       <span class="transaction-amount">$${t.amount.toFixed(2)}</span>
       <button class="btn-delete" aria-label="Delete ${escapeHtml(t.name)}" data-index="${originalIndex}">&#x2715;</button>
