@@ -347,8 +347,6 @@ body::after {
   min-height: 44px;
   appearance: none;
   -webkit-appearance: none;
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
 }
 
 [data-theme="light"] .form-group input,
