@@ -13,6 +13,7 @@ const CATEGORY_COLORS = {
   Transport: '#10b981',
   Fun:       '#ec4899',
   Work:      '#3b82f6',
+  Jobs:      '#3b82f6',
 };
 
 const CATEGORY_ICONS = {
@@ -20,6 +21,7 @@ const CATEGORY_ICONS = {
   Transport: '🚗',
   Fun:       '🎮',
   Work:      '💼',
+  Jobs:      '💼',
 };
 
 /* ── DOM refs ── */
@@ -278,7 +280,7 @@ function renderList() {
    RENDER CHART
 ════════════════════════════════ */
 function renderChart() {
-  const totals = { Food: 0, Transport: 0, Fun: 0, Work: 0 };
+  const totals = { Food: 0, Transport: 0, Fun: 0, Work: 0, Jobs: 0 };
   transactions.forEach(t => { totals[t.category] += t.amount; });
 
   const labels = Object.keys(totals).filter(k => totals[k] > 0);
