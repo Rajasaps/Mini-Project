@@ -46,6 +46,54 @@ const limitBarFill = document.getElementById('limitBarFill');
 const limitBarPct  = document.getElementById('limitBarPct');
 
 /* ════════════════════════════════
+   CUSTOM CATEGORY DROPDOWN
+════════════════════════════════ */
+const customCategory  = document.getElementById('customCategory');
+const customCatValue  = document.getElementById('customCategoryValue');
+const customOptions   = customCategory.querySelectorAll('.custom-option');
+
+customCategory.addEventListener('click', e => {
+  const wasOpen = customCategory.classList.contains('open');
+  closeCustomSelect();
+  if (!wasOpen) {
+    customCategory.classList.add('open');
+    customCategory.setAttribute('aria-expanded', 'true');
+  }
+  e.stopPropagation();
+});
+
+customCategory.addEventListener('keydown', e => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    customCategory.click();
+  } else if (e.key === 'Escape') {
+    closeCustomSelect();
+  }
+});
+
+customOptions.forEach(opt => {
+  opt.addEventListener('click', e => {
+    e.stopPropagation();
+    const val = opt.dataset.value;
+    categoryEl.value = val;
+    customCatValue.textContent = opt.textContent;
+    customCategory.classList.add('selected');
+    customCategory.classList.remove('invalid');
+    document.getElementById('categoryError').classList.remove('visible');
+    customOptions.forEach(o => o.classList.remove('selected'));
+    opt.classList.add('selected');
+    closeCustomSelect();
+  });
+});
+
+document.addEventListener('click', closeCustomSelect);
+
+function closeCustomSelect() {
+  customCategory.classList.remove('open');
+  customCategory.setAttribute('aria-expanded', 'false');
+}
+
+/* ════════════════════════════════
    THEME
 ════════════════════════════════ */
 function applyTheme(theme) {
@@ -132,8 +180,14 @@ function validate() {
   if (!amountEl.value || isNaN(amt) || amt <= 0) { setError(amountEl, 'amountError', true);  valid = false; }
   else                                             { setError(amountEl, 'amountError', false); }
 
-  if (!categoryEl.value) { setError(categoryEl, 'categoryError', true);  valid = false; }
-  else                    { setError(categoryEl, 'categoryError', false); }
+  if (!categoryEl.value) {
+    setError(categoryEl, 'categoryError', true);
+    customCategory.classList.add('invalid');
+    valid = false;
+  } else {
+    setError(categoryEl, 'categoryError', false);
+    customCategory.classList.remove('invalid');
+  }
 
   return valid;
 }
@@ -367,6 +421,9 @@ form.addEventListener('submit', e => {
   render();
   showToast(`✅ "${transactions[transactions.length-1].name}" added`);
   form.reset();
+  customCatValue.textContent = 'Select a category';
+  customCategory.classList.remove('selected', 'invalid');
+  customOptions.forEach(o => o.classList.remove('selected'));
   [itemNameEl, amountEl, categoryEl].forEach(el => el.classList.remove('invalid'));
 });
 
