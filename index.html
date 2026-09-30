@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light"></html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Budget Visualizer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Toast container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="container">
+
+    <!-- Top bar: theme toggle -->
+    <div class="topbar">
+      <span class="app-name">Budget Visualizer</span>
+      <button class="btn-theme" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+      </button>
+    </div>
+
+    <!-- Balance Card -->
+    <div class="card balance-card">
+      <p class="balance-label">Total Balance</p>
+      <h1 class="balance-amount" id="totalBalance">$0.00</h1>
+      <p class="balance-sub">Tracked across all categories</p>
+    </div>
+
+    <!-- Input Form Card -->
+    <div class="card">
+      <h2 class="section-title">Add Transaction</h2>
+      <form id="transactionForm" novalidate>
+        <div class="form-group">
+          <label for="itemName">Item Name</label>
+          <input type="text" id="itemName" placeholder="e.g. Grocery run" autocomplete="off" />
+          <span class="field-error" id="nameError">Please enter an item name.</span>
+        </div>
+        <div class="form-group">
+          <label for="amount">Amount ($)</label>
+          <input type="number" id="amount" placeholder="0.00" min="0.01" step="0.01" />
+          <span class="field-error" id="amountError">Please enter a valid amount.</span>
+        </div>
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="">Select a category</option>
+            <option value="Food">Food</option>
+            <option value="Transport">Transport</option>
+            <option value="Fun">Fun</option>
+          </select>
+          <span class="field-error" id="categoryError">Please select a category.</span>
+        </div>
+        <button type="submit" class="btn-submit">Add Transaction</button>
+      </form>
+    </div>
+
+    <!-- Spend Limit Card -->
+    <div class="card">
+      <h2 class="section-title">Spending Limit</h2>
+      <div class="limit-row">
+        <div class="form-group" style="flex:1; margin-bottom:0;">
+          <input type="number" id="spendLimit" placeholder="Set total limit (e.g. 500)" min="0.01" step="0.01" />
+        </div>
+        <button class="btn-set-limit" id="setLimitBtn">Set</button>
+      </div>
+      <div class="limit-status" id="limitStatus"></div>
+      <div class="limit-bar-wrap" id="limitBarWrap">
+        <div class="limit-bar-track">
+          <div class="limit-bar-fill" id="limitBarFill"></div>
+        </div>
+        <span class="limit-bar-pct" id="limitBarPct"></span>
+      </div>
+    </div>
+
+    <!-- Chart Card -->
+    <div class="card">
+      <h2 class="section-title">Spending by Category</h2>
+      <div class="chart-wrapper">
+        <canvas id="spendingChart"></canvas>
+        <p class="chart-empty" id="chartEmpty">No transactions yet.</p>
+      </div>
+    </div>
+
+    <!-- Transaction List Card -->
+    <div class="card">
+      <div class="list-header">
+        <h2 class="section-title" style="margin-bottom:0;">Transactions</h2>
+        <div class="sort-controls">
+          <label for="sortSelect" class="sort-label">Sort</label>
+          <select id="sortSelect" class="sort-select">
+            <option value="default">Default</option>
+            <option value="amount-asc">Amount ↑</option>
+            <option value="amount-desc">Amount ↓</option>
+            <option value="category">Category</option>
+          </select>
+        </div>
+      </div>
+      <div class="transaction-list" id="transactionList">
+        <p class="list-empty" id="listEmpty">No transactions added yet.</p>
+      </div>
+    </div>
+
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
